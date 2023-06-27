@@ -19,10 +19,12 @@ Hexagonal architecture implemenetation following clea architecture principles
   - <bold>application</bold>:
     - Glue that configures all the service dependencies together
 - <bold>Design Decisions</bold>:
-  - Two-Way model mapping strategy has been followed where:
+  - One-Way model mapping strategy has been followed where:
     - <bold>Adapters</bold> have their own model
-    - <bold>Ports</bold> have their own model
-    - <bold>Domain</bold> have their own model
+    - <bold>Ports</bold> and <bold>Domain</bold> share the model:
+      - Adapting two-way approach leads to convoluted objects
+      - Further, increases maintenance of the application
+      - In a large scale system, can become complex very quickly to manage state of various objects
   - A simple One-Way approach could have been preferred, but:
     - Keeping each object in their respective boundary prevents polluting application
     - Object representation in each layer for a use case can be modelled for data information exposed by that layer
@@ -30,3 +32,5 @@ Hexagonal architecture implemenetation following clea architecture principles
       - In this case, using the same object through inner layer (service, domain) would resolve management and maintainability issues
 
 # Usage (In progress)
+
+- API: http://localhost:<APP-PORT>/swagger-ui/index.html

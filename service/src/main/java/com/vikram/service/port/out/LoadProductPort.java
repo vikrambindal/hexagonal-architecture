@@ -1,7 +1,12 @@
 package com.vikram.service.port.out;
 
-import com.vikram.service.dto.ProductQueryResponse;
+import com.vikram.domain.model.product.ProductModel;
+
+import java.util.List;
 
 public interface LoadProductPort {
-    ProductQueryResponse getProductById(Integer productId);
+
+    ProductModel getProductById(Integer productId) throws Exception;
+
+    List<ProductModel> getProducts();
 }

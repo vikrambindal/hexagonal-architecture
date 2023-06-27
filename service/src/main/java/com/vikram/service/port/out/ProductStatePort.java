@@ -1,9 +1,8 @@
 package com.vikram.service.port.out;
 
-import com.vikram.service.dto.CreateProductCommand;
-import com.vikram.service.dto.ProductQueryResponse;
+import com.vikram.domain.model.product.ProductModel;
 
 public interface ProductStatePort {
 
-    ProductQueryResponse createProduct(CreateProductCommand createProductCommand);
+    ProductModel createProduct(ProductModel productModel);
 }

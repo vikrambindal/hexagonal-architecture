@@ -1,28 +1,50 @@
 package com.vikram.persistence.service;
 
+import com.vikram.domain.model.product.ProductModel;
 import com.vikram.persistence.entity.ProductJpaEntity;
 import com.vikram.persistence.repository.ProductRepository;
-import com.vikram.service.dto.CreateProductCommand;
-import com.vikram.service.dto.ProductQueryResponse;
+import com.vikram.service.port.out.LoadProductPort;
 import com.vikram.service.port.out.ProductStatePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 import static com.vikram.persistence.mapper.ProductPersistenceMapper.PRODUCT_PERSISTENCE_MAPPER;
 
 @Component
 @RequiredArgsConstructor
-public class ProductPersistenceService implements ProductStatePort {
+public class ProductPersistenceService implements ProductStatePort, LoadProductPort {
 
     private final ProductRepository productRepository;
 
     @Override
-    public ProductQueryResponse createProduct(CreateProductCommand createProductCommand) {
+    public ProductModel createProduct(ProductModel productModel) {
 
-        ProductJpaEntity productJpaEntity = PRODUCT_PERSISTENCE_MAPPER.toProductJpaEntity(createProductCommand);
+        ProductJpaEntity productJpaEntity = PRODUCT_PERSISTENCE_MAPPER.toProductJpaEntity(productModel);
 
         productJpaEntity = productRepository.saveAndFlush(productJpaEntity);
 
-        return PRODUCT_PERSISTENCE_MAPPER.toProductQueryResponse(productJpaEntity);
+        return PRODUCT_PERSISTENCE_MAPPER.toProductModel(productJpaEntity);
+    }
+
+    @Override
+    public ProductModel getProductById(Integer productId) throws Exception {
+
+        Optional<ProductJpaEntity> optProductEntity = productRepository.findById(productId);
+        if (optProductEntity.isEmpty()) {
+            throw new Exception(String.format("No product found with id %s", productId));
+        }
+
+        return PRODUCT_PERSISTENCE_MAPPER.toProductModel(optProductEntity.get());
+    }
+
+    @Override
+    public List<ProductModel> getProducts() {
+
+        List<ProductJpaEntity> productJpaEntityList = productRepository.findAll();
+
+        return PRODUCT_PERSISTENCE_MAPPER.toProductModel(productJpaEntityList);
     }
 }
