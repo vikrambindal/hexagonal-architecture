@@ -1,6 +1,6 @@
 # About
 
-Hexagonal architecture implemenetation following clea architecture principles
+Hexagonal architecture implementation following clea architecture principles
 
 - The project is a typical ecommerce order-product application
 - Application architecture can be seen below:
@@ -21,15 +21,10 @@ Hexagonal architecture implemenetation following clea architecture principles
 - <bold>Design Decisions</bold>:
   - One-Way model mapping strategy has been followed where:
     - <bold>Adapters</bold> have their own model
-    - <bold>Ports</bold> and <bold>Domain</bold> share the model:
+    - <bold>Ports</bold> and <bold>Domain</bold> share the same model:
       - Adapting two-way approach leads to convoluted objects
       - Further, increases maintenance of the application
       - In a large scale system, can become complex very quickly to manage state of various objects
-  - A simple One-Way approach could have been preferred, but:
-    - Keeping each object in their respective boundary prevents polluting application
-    - Object representation in each layer for a use case can be modelled for data information exposed by that layer
-    - It does have tradeoffs of its own (e.g: object mappers between each layer can grow significantly)
-      - In this case, using the same object through inner layer (service, domain) would resolve management and maintainability issues
 
 # Usage (In progress)
 

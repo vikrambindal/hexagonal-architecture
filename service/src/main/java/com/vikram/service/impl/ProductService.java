@@ -1,6 +1,7 @@
 package com.vikram.service.impl;
 
 import com.vikram.domain.model.product.ProductModel;
+import com.vikram.service.exception.EntityNotFoundException;
 import com.vikram.service.port.in.ProductQueryUseCase;
 import com.vikram.service.port.in.ProductUseCase;
 import com.vikram.service.port.out.LoadProductPort;
@@ -22,7 +23,7 @@ public class ProductService implements ProductUseCase, ProductQueryUseCase {
     }
 
     @Override
-    public ProductModel retrieveProductById(Integer productId) throws Exception {
+    public ProductModel retrieveProductById(Integer productId) throws EntityNotFoundException {
 
         return loadProductPort.getProductById(productId);
     }

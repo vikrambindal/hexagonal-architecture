@@ -3,6 +3,7 @@ package com.vikram.persistence.service;
 import com.vikram.domain.model.product.ProductModel;
 import com.vikram.persistence.entity.ProductJpaEntity;
 import com.vikram.persistence.repository.ProductRepository;
+import com.vikram.service.exception.EntityNotFoundException;
 import com.vikram.service.port.out.LoadProductPort;
 import com.vikram.service.port.out.ProductStatePort;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,11 @@ public class ProductPersistenceService implements ProductStatePort, LoadProductP
     }
 
     @Override
-    public ProductModel getProductById(Integer productId) throws Exception {
+    public ProductModel getProductById(Integer productId) throws EntityNotFoundException {
 
         Optional<ProductJpaEntity> optProductEntity = productRepository.findById(productId);
         if (optProductEntity.isEmpty()) {
-            throw new Exception(String.format("No product found with id %s", productId));
+            throw new EntityNotFoundException("No product exist for the given record");
         }
 
         return PRODUCT_PERSISTENCE_MAPPER.toProductModel(optProductEntity.get());
